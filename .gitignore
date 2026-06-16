@@ -45,3 +45,11 @@ next-env.d.ts
 # prisma sqlite database
 /dev.db
 /dev.db-journal
+
+# next-pwa generated service worker
+/public/sw.js
+/public/sw.js.map
+/public/workbox-*.js
+/public/workbox-*.js.map
+/public/swe-worker-*.js
+/public/swe-worker-*.js.map
