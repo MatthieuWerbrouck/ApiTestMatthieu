@@ -1,16 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getRoommateLedger } from "@/lib/coloc";
 
 export async function GET() {
-  const [entries, aggregate] = await Promise.all([
-    prisma.roommateEntry.findMany({ orderBy: { date: "desc" } }),
-    prisma.roommateEntry.aggregate({ _sum: { amount: true } }),
-  ]);
-
-  return NextResponse.json({
-    entries,
-    balance: aggregate._sum.amount ?? 0,
-  });
+  const ledger = await getRoommateLedger();
+  return NextResponse.json(ledger);
 }
 
 export async function POST(request: NextRequest) {

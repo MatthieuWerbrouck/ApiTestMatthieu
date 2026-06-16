@@ -1,17 +1,16 @@
-export function getMonthRange(month?: string | null): { start: Date; end: Date } {
-  const now = new Date();
-  let year = now.getUTCFullYear();
-  let monthIndex = now.getUTCMonth();
-
-  if (month) {
-    const match = /^(\d{4})-(\d{2})$/.exec(month);
-    if (match) {
-      year = Number(match[1]);
-      monthIndex = Number(match[2]) - 1;
-    }
+export function getMonthString(month?: string | null): string {
+  if (month && /^\d{4}-\d{2}$/.test(month)) {
+    return month;
   }
+  const now = new Date();
+  return `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, "0")}`;
+}
 
-  const start = new Date(Date.UTC(year, monthIndex, 1));
-  const end = new Date(Date.UTC(year, monthIndex + 1, 1));
+export function getMonthRange(month?: string | null): { start: Date; end: Date } {
+  const resolved = getMonthString(month);
+  const [year, monthNumber] = resolved.split("-").map(Number);
+
+  const start = new Date(Date.UTC(year, monthNumber - 1, 1));
+  const end = new Date(Date.UTC(year, monthNumber, 1));
   return { start, end };
 }

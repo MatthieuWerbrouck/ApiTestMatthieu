@@ -3,11 +3,13 @@ import { prisma } from "@/lib/prisma";
 import { TransactionType } from "@/generated/prisma/enums";
 
 export async function GET(request: NextRequest) {
-  const type = request.nextUrl.searchParams.get("type");
+  const typeParam = request.nextUrl.searchParams.get("type");
 
-  if (type && type !== TransactionType.INCOME && type !== TransactionType.EXPENSE) {
+  if (typeParam && typeParam !== TransactionType.INCOME && typeParam !== TransactionType.EXPENSE) {
     return NextResponse.json({ error: "Invalid type filter" }, { status: 400 });
   }
+
+  const type = typeParam as TransactionType | null;
 
   const categories = await prisma.category.findMany({
     where: type ? { type } : undefined,
