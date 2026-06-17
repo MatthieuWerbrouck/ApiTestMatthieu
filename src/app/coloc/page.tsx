@@ -3,6 +3,8 @@ import RoommateBalanceBanner from "@/components/RoommateBalanceBanner";
 import RoommateEntryForm from "@/components/RoommateEntryForm";
 import RoommateLedgerList from "@/components/RoommateLedgerList";
 
+export const dynamic = "force-dynamic";
+
 export default async function ColocPage() {
   const { entries, balance } = await getRoommateLedger();
 
